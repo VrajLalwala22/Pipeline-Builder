@@ -135,8 +135,11 @@ def parse_pipeline(pipeline: PipelineRequest) -> PipelineResponse:
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
 
-    # If we processed all nodes, there are no cycles → it's a DAG
     is_dag: bool = processed_count == num_nodes
+
+    import json
+    with open('payload_dump.json', 'w') as f:
+        f.write(pipeline.json())
 
     return PipelineResponse(
         num_nodes=num_nodes,
